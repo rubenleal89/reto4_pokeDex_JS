@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.sect-poken-api{
+    width: 70%;
+    margin: auto;
+    background-color: #3B020D;
+    padding: 20px;
+}
+
+.pantalla-poken{
+    background-color: #DD082F;
+    min-height: 250px;
+}
+
+.div-ver-pokemon{
+    width: 60%;
+    border: 10px solid #B0B0B0;
+    border-radius: 10px;
+    margin: auto;
+}
+
+.div-movimientos{
+    display: grid;
+    grid-template-columns: auto auto;
+    border: 1px solid gray;
+    height: 200px;
+    overflow-y: scroll;
+}
+
+.div-estadisticas{
+    display: grid;
+    grid-template-columns: auto auto;
+    height: 100px;
+    overflow-y: scroll;
+}
