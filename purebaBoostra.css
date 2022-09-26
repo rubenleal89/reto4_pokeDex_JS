@@ -1,0 +1,19 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+
+.container-sm{
+  background-color: #3B020D;
+}
+
+.pantalla-poken{
+  background-color: #DD082F;
+}
+
+.div-ver-pokemon{
+  /* background-image: url("./img/noHaySeñal.png"); */
+  background-color: gray;
+  border: 10px solid #B0B0B0;
+  border-radius: 10px;
+}

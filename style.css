@@ -5,35 +5,116 @@
 }
 
 .sect-poken-api{
-    width: 70%;
     margin: auto;
     background-color: #3B020D;
     padding: 20px;
 }
 
+.div-ver-pokemon div{
+    border: 1px solid;
+}
+
+.div-ver-pokemon .div-hablidades{
+    border: none;
+    margin: 0;
+}
+
 .pantalla-poken{
     background-color: #DD082F;
-    min-height: 250px;
+    border-radius: 10px;
+    border: 2px solid;
 }
 
 .div-ver-pokemon{
-    width: 60%;
     border: 10px solid #B0B0B0;
     border-radius: 10px;
     margin: auto;
+    min-height: 250px;
+}
+
+.div-formulario .pokemonName{
+    background-color: #EABB02;
+    border: 1px solid;
+}
+
+.col{
+    margin: 10px;
+}
+
+.div-formulario .btn{
+    background-color: #972727;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 60%;
+    border: 1px solid;
+}
+
+.div-formulario{
+    margin: 10px 0;
 }
 
 .div-movimientos{
     display: grid;
     grid-template-columns: auto auto;
-    border: 1px solid gray;
-    height: 200px;
+    max-height: 400px;
     overflow-y: scroll;
 }
 
 .div-estadisticas{
     display: grid;
     grid-template-columns: auto auto;
-    height: 100px;
+    max-height: 150px;
     overflow-y: scroll;
+}
+
+.pokemonName{
+    background-color: #EABB02;
+}
+
+.fa-circle{
+    font-size: x-large;
+}
+
+.icon-circulares{
+    padding: 20px 10px;
+}
+
+.circle-ovalado{
+    padding: 0 10px;
+}
+
+.circle-1{
+    color: #01FBFB;
+    font-size: 3.5rem;
+}
+.circle-2{
+    color: red;
+}
+.circle-3{
+    color: yellow;
+}
+.circle-4{
+    color: green;
+}
+
+.circle-minus{
+    color: #519AFB;
+    font-size: 3rem;
+}
+
+.minus-1{
+    color: #2FF901;
+    font-size: 6rem;
+}
+
+.minus-2{
+    color: #EABB02;
+    font-size: 6rem;
+}
+
+.error{
+    background-repeat: no-repeat;
+    background-image: url(./img/error.jpg);
+    background-size: 100%;
+    
 }
