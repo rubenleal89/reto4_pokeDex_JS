@@ -1,13 +1,10 @@
-// let namePoken = "pikachu"
 let poken = async (namePoken)=>{
   try{
     let apiPoken = await fetch(`https://pokeapi.co/api/v2/pokemon/${namePoken}`)
     let pokemon = await apiPoken.json();
-    console.log(pokemon);
-    // console.log(pokemon.abilities);
 
     let divVerBusqueda = document.getElementById("div-ver-pokemon");
-    divVerBusqueda.className="container-sm div-ver-pokemon d-md-flex justify-content-md-between";
+    divVerBusqueda.className="container-sm div-ver-pokemon d-md-flex justify-content-md-between cargaPag";    
     divVerBusqueda.innerHTML="";
       let divPoken = document.createElement("div");
       divPoken.className="div-caracteristicas text-center";
@@ -54,7 +51,11 @@ let poken = async (namePoken)=>{
       
       divVerBusqueda.insertAdjacentElement("beforeend",divMoviPoken);
       divVerBusqueda.insertAdjacentElement("beforeend",divEstadis);
-      
+
+      // if(apiPoken.status===200){
+      //   let spinner = document.getElementById("spinner");
+      //   spinner.className="spinerOculto"
+      // }
   }
   catch(error){
     let divVerBusqueda = document.getElementById("div-ver-pokemon");
@@ -62,6 +63,20 @@ let poken = async (namePoken)=>{
     divVerBusqueda.className="container-sm div-ver-pokemon d-md-flex justify-content-md-between error";
     alert("El pokemon que intestas buscar no se encuentra");
   }
+  finally{
+    let spinner = document.getElementById("spinner");
+        spinner.className="spinerOculto"
+  }
+}
+
+function spinner(divVerBusqueda) {
+  let divSpinner = document.createElement("div");
+    divSpinner.className="spinner-border text-dark";
+    let spinner = document.createElement("span");
+    spinner.className="visually-hidden";
+    spinner.textContent="Loading...";
+    divSpinner.insertAdjacentElement("beforeend",spinner);
+    divVerBusqueda.insertAdjacentElement("beforeend",divSpinner);
 }
 
 function movimientos(arrayMovi,divMoviPoken){
@@ -117,4 +132,7 @@ function buscarPokemon(e){
   let pokemon = document.getElementById("pokemonName").value;
   let namePokemon = pokemon.toLowerCase();
   validacion(namePokemon);
+
+  let spinner = document.getElementById("spinner");
+  spinner.className="d-flex justify-content-center div-spinner";
 }
