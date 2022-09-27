@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-weight: bold;
 }
 
 .sect-poken-api{
@@ -132,7 +133,6 @@
 }
 
 .cargaPag{
-    font-weight: bold;
     background-image: url(./img/fondoPoken.png);
     background-size: cover;
     background-repeat: no-repeat;
@@ -146,4 +146,9 @@
     position: absolute;
     top: 40%;
     left: 50%;
+}
+
+h4{
+    color: purple;
+    font-family: cursive;
 }
