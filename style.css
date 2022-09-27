@@ -10,10 +10,6 @@
     padding: 20px;
 }
 
-.div-ver-pokemon div{
-    border: 1px solid;
-}
-
 .div-ver-pokemon .div-hablidades{
     border: none;
     margin: 0;
@@ -29,12 +25,11 @@
     border: 10px solid #B0B0B0;
     border-radius: 10px;
     margin: auto;
-    min-height: 250px;
+    min-height: 300px;
 }
 
 .div-formulario .pokemonName{
     background-color: #EABB02;
-    border: 1px solid;
 }
 
 .col{
@@ -56,19 +51,27 @@
 .div-movimientos{
     display: grid;
     grid-template-columns: auto auto;
+    grid-template-areas: "textMovi textMovi";
     max-height: 400px;
+    padding: 10px;
     overflow-y: scroll;
+}
+
+.text-movimientos{
+    grid-area: textMovi;
 }
 
 .div-estadisticas{
     display: grid;
     grid-template-columns: auto auto;
-    max-height: 150px;
+    grid-template-areas: "textEsta textEsta";
+    max-height: 400px;
+    padding: 10px;
     overflow-y: scroll;
 }
 
-.pokemonName{
-    background-color: #EABB02;
+.text-estadisticas{
+    grid-area: textEsta;
 }
 
 .fa-circle{
@@ -77,6 +80,10 @@
 
 .icon-circulares{
     padding: 20px 10px;
+}
+
+.icon-circulares i{
+    margin-left: 10px;
 }
 
 .circle-ovalado{
@@ -116,5 +123,8 @@
     background-repeat: no-repeat;
     background-image: url(./img/error.jpg);
     background-size: 100%;
-    
+}
+
+.inicioPag{
+    background-image: url(./img/noHaySeñal.png);
 }

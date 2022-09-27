@@ -1,7 +1,7 @@
 // let namePoken = "pikachu"
 let poken = async (namePoken)=>{
   try{
-    let apiPoken = await fetch(`https://pokeapi.co/api/v2/pokemon/${namePoken}`) // colocal el parametro
+    let apiPoken = await fetch(`https://pokeapi.co/api/v2/pokemon/${namePoken}`)
     let pokemon = await apiPoken.json();
     console.log(pokemon);
     // console.log(pokemon.abilities);
@@ -10,7 +10,7 @@ let poken = async (namePoken)=>{
     divVerBusqueda.className="container-sm div-ver-pokemon d-md-flex justify-content-md-between";
     divVerBusqueda.innerHTML="";
       let divPoken = document.createElement("div");
-      divPoken.className="div-caracteristicas";
+      divPoken.className="div-caracteristicas text-center";
       let namePokemon = document.createElement("h1");
       namePokemon.textContent=pokemon.name;
       let imgPokenFront = document.createElement("img");
@@ -19,12 +19,12 @@ let poken = async (namePoken)=>{
       imgPokenBack.src=pokemon.sprites.back_default;
       let divMoviPoken = document.createElement("div");
 // Busqueda de movimientos
-      divMoviPoken.className="div-movimientos";
+      divMoviPoken.className="div-movimientos gap-2";
       let arrayMovi = pokemon.moves;
       movimientos(arrayMovi,divMoviPoken);
 // Busqueda de estadisticas
       let divEstadis = document.createElement("div");
-      divEstadis.className="div-estadisticas";
+      divEstadis.className="div-estadisticas align-items-center gap-3";
       let estadiPoken = pokemon.stats;
       estadisticas(estadiPoken,divEstadis);
       let tipoPoken = document.createElement("p")
@@ -60,10 +60,15 @@ let poken = async (namePoken)=>{
     let divVerBusqueda = document.getElementById("div-ver-pokemon");
     divVerBusqueda.innerHTML="";
     divVerBusqueda.className="container-sm div-ver-pokemon d-md-flex justify-content-md-between error";
+    alert("El pokemon que intestas buscar no se encuentra");
   }
 }
 
 function movimientos(arrayMovi,divMoviPoken){
+  let textMovimientos = document.createElement("h4");
+  textMovimientos.textContent="Movimientos";
+  textMovimientos.className="text-movimientos text-center";
+  divMoviPoken.insertAdjacentElement("beforeend",textMovimientos);
   arrayMovi.forEach(element => {
     let movimientos = document.createElement("p");
     movimientos.textContent=element.move.name;
@@ -72,6 +77,10 @@ function movimientos(arrayMovi,divMoviPoken){
 }
 
 function estadisticas(estadiPoken,divEstadis){
+  let textEstadisticas = document.createElement("h4");
+  textEstadisticas.textContent="Estadisticas";
+  textEstadisticas.className="text-estadisticas text-center";
+  divEstadis.insertAdjacentElement("beforeend",textEstadisticas);
   estadiPoken.forEach(element => {
     let statName = document.createElement("p");
     statName.textContent=element.stat.name;
@@ -90,14 +99,22 @@ function habilidades(habilidad,divHabilidad){
   });
 }
 
+function validacion(namePokemon){
+  if (/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/.test(namePokemon)){
+    poken(namePokemon);
+    formulario.reset();
+  }
+  else{
+    alert("Solo se aceptan letras")
+  }
+}
+
 let formulario = document.getElementById("formulario");
 formulario.addEventListener("submit",buscarPokemon);
 
 function buscarPokemon(e){
   e.preventDefault();
-  let namePokemon = document.getElementById("pokemonName").value;
-  poken(namePokemon);
-  console.log(namePokemon);
+  let pokemon = document.getElementById("pokemonName").value;
+  let namePokemon = pokemon.toLowerCase();
+  validacion(namePokemon);
 }
-
-// poken();//eliminar
