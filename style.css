@@ -123,9 +123,9 @@
 }
 
 .error{
-    /* background-repeat: no-repeat; */
+    background-repeat: no-repeat;
     background-image: url(./img/error.jpg);
-    background-size: 50%;
+    background-size:cover;
 }
 
 .inicioPag{

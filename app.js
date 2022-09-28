@@ -51,11 +51,6 @@ let poken = async (namePoken)=>{
       
       divVerBusqueda.insertAdjacentElement("beforeend",divMoviPoken);
       divVerBusqueda.insertAdjacentElement("beforeend",divEstadis);
-
-      // if(apiPoken.status===200){
-      //   let spinner = document.getElementById("spinner");
-      //   spinner.className="spinerOculto"
-      // }
   }
   catch(error){
     let divVerBusqueda = document.getElementById("div-ver-pokemon");
@@ -116,6 +111,8 @@ function habilidades(habilidad,divHabilidad){
 
 function validacion(namePokemon){
   if (/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/.test(namePokemon)){
+    let spinner = document.getElementById("spinner");
+    spinner.className="d-flex justify-content-center div-spinner";
     poken(namePokemon);
     formulario.reset();
   }
@@ -132,7 +129,4 @@ function buscarPokemon(e){
   let pokemon = document.getElementById("pokemonName").value;
   let namePokemon = pokemon.toLowerCase();
   validacion(namePokemon);
-
-  let spinner = document.getElementById("spinner");
-  spinner.className="d-flex justify-content-center div-spinner";
 }
