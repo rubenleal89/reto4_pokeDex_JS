@@ -20,7 +20,7 @@ let poken = async (namePoken)=>{
       let arrayMovi = pokemon.moves;
       movimientos(arrayMovi,divMoviPoken);
 // Busqueda de estadisticas
-      let divEstadis = document.createElement("div");
+      let divEstadis = document.createElement("ul");
       divEstadis.className="div-estadisticas align-items-center gap-3";
       let estadiPoken = pokemon.stats;
       estadisticas(estadiPoken,divEstadis);
@@ -39,7 +39,6 @@ let poken = async (namePoken)=>{
       divHabilidad.insertAdjacentElement("beforeend",textHabilidades);
       habilidades(habilidad,divHabilidad);
 
-      // divVerBusqueda.insertAdjacentElement("beforeend",divVerBusqueda);
       divVerBusqueda.insertAdjacentElement("beforeend",divPoken);
       divPoken.insertAdjacentElement("beforeend",namePokemon);
       divPoken.insertAdjacentElement("beforeend",tipoPoken);
@@ -80,7 +79,7 @@ function movimientos(arrayMovi,divMoviPoken){
   textMovimientos.className="text-movimientos text-center";
   divMoviPoken.insertAdjacentElement("beforeend",textMovimientos);
   arrayMovi.forEach(element => {
-    let movimientos = document.createElement("p");
+    let movimientos = document.createElement("li");
     movimientos.textContent=element.move.name;
     divMoviPoken.insertAdjacentElement("beforeend",movimientos);
   });
@@ -92,13 +91,32 @@ function estadisticas(estadiPoken,divEstadis){
   textEstadisticas.className="text-estadisticas text-center";
   divEstadis.insertAdjacentElement("beforeend",textEstadisticas);
   estadiPoken.forEach(element => {
-    let statName = document.createElement("p");
-    statName.textContent=element.stat.name;
-    let baseStat = document.createElement("p");
-    baseStat.textContent=element.base_stat;
+    let statName = document.createElement("li");
+    iconEstadisticas(element,statName);
+    statName.textContent=`${element.stat.name} : ${element.base_stat}`;
     divEstadis.insertAdjacentElement("beforeend",statName);
-    divEstadis.insertAdjacentElement("beforeend",baseStat);
   });
+}
+
+function iconEstadisticas(element,statName){
+    if(element.stat.name==="hp"){
+      statName.className="hp-poken";
+    }
+    else if(element.stat.name==="attack"){
+      statName.className="attack-poken";
+    }
+    else if(element.stat.name==="defense"){
+      statName.className="defense-poken";
+    }
+    else if(element.stat.name==="special-attack"){
+      statName.className="special-attack-poken";
+    }
+    else if(element.stat.name==="special-defense"){
+      statName.className="special-defense-poken";
+    }
+    else if(element.stat.name==="speed"){
+      statName.className="speed-poken";
+    }
 }
 
 function habilidades(habilidad,divHabilidad){
@@ -109,11 +127,22 @@ function habilidades(habilidad,divHabilidad){
   });
 }
 
+function recargaUrl(){
+  let url = window.location.pathname;
+  let urlNew = `${url}?#`;
+  history.pushState(null,"",urlNew)
+}
+
 function validacion(namePokemon){
   if (/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/.test(namePokemon)){
     let spinner = document.getElementById("spinner");
     spinner.className="d-flex justify-content-center div-spinner";
     poken(namePokemon);
+
+    let url = window.location.pathname;
+    let urlNew = `${url}?NAME=${namePokemon}/enconters`;
+    history.pushState(null,"",urlNew)
+
     formulario.reset();
   }
   else{
@@ -130,3 +159,5 @@ function buscarPokemon(e){
   let namePokemon = pokemon.toLowerCase();
   validacion(namePokemon);
 }
+
+document.addEventListener('DOMContentLoaded',recargaUrl);

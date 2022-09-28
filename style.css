@@ -65,16 +65,11 @@
 }
 
 .div-estadisticas{
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-areas: "textEsta textEsta";
+    display: flex;
+    flex-direction: column;
     max-height: 400px;
     padding: 10px;
-    overflow-y: scroll;
-}
-
-.text-estadisticas{
-    grid-area: textEsta;
+    margin: 0 20px;
 }
 
 .fa-circle{
@@ -125,7 +120,7 @@
 .error{
     background-repeat: no-repeat;
     background-image: url(./img/error.jpg);
-    background-size:cover;
+    background-size: 100% 100%;
 }
 
 .inicioPag{
@@ -151,4 +146,45 @@
 h4{
     color: purple;
     font-family: cursive;
+}
+
+/* SCROLL DISEÑO */
+
+.div-movimientos::-webkit-scrollbar{
+    width: 7px;
+}
+
+.div-movimientos::-webkit-scrollbar-thumb{
+    background-color: rgba(128, 0, 128, 0.445);
+    border-radius: 5px;
+    height: 50px;
+}
+
+.div-movimientos::-webkit-scrollbar{
+    width: 7px;
+}
+/* ICONOS DE ESTADISTOCAS */
+
+.hp-poken{
+    list-style-image: url(./img/hp.png);
+}
+
+.attack-poken{
+    list-style-image: url(./img/ataque.png)
+}
+
+.defense-poken{
+    list-style-image: url(./img/defensa.png);
+}
+
+.special-attack-poken{
+    list-style-image: url(./img/super-ataque.png);
+}
+
+.special-defense-poken{
+    list-style-image: url(./img/super-defensa.png);
+}
+
+.speed-poken{
+    list-style-image: url(./img/speed.png);
 }
