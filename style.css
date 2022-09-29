@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: cursive;
     font-weight: bold;
 }
 
@@ -52,16 +53,13 @@
 }
 
 .div-movimientos{
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-areas: "textMovi textMovi";
     max-height: 400px;
-    padding: 10px;
     overflow-y: scroll;
 }
 
-.text-movimientos{
-    grid-area: textMovi;
+.div-movimientos{
+    display: flex;
+    flex-direction: column;
 }
 
 .div-estadisticas{
@@ -85,7 +83,10 @@
 }
 
 .circle-ovalado{
-    padding: 0 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 20px 10px;
 }
 
 .circle-1{
@@ -107,14 +108,18 @@
     font-size: 3rem;
 }
 
-.minus-1{
-    color: #2FF901;
-    font-size: 6rem;
+.circle-ovalado .btn{
+    --bs-btn-padding-y: .25rem;
+    /* --bs-btn-padding-x: 1rem; */
+    --bs-btn-font-size: .75rem;
+    --bs-btn-border-radius: 30px;
+    --bs-btn-color: black;
+    --bs-btn-hover-color: white ;
+    --bs-btn-font-weight: bold;
 }
 
-.minus-2{
-    color: #EABB02;
-    font-size: 6rem;
+.circle-ovalado .btn-success{
+    width: 7rem;
 }
 
 .error{
@@ -150,18 +155,14 @@ h4{
 
 /* SCROLL DISEÑO */
 
-.div-movimientos::-webkit-scrollbar{
+.containers-scroll::-webkit-scrollbar{
     width: 7px;
 }
 
-.div-movimientos::-webkit-scrollbar-thumb{
+.containers-scroll::-webkit-scrollbar-thumb{
     background-color: rgba(128, 0, 128, 0.445);
     border-radius: 5px;
     height: 50px;
-}
-
-.div-movimientos::-webkit-scrollbar{
-    width: 7px;
 }
 /* ICONOS DE ESTADISTOCAS */
 
@@ -187,4 +188,11 @@ h4{
 
 .speed-poken{
     list-style-image: url(./img/speed.png);
+}
+
+/* Lista de Ubicacion Pokemon */
+
+.lista-area-poken{
+    max-height: 400px;
+    overflow-y: scroll;
 }

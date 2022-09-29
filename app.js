@@ -4,7 +4,7 @@ let poken = async (namePoken)=>{
     let pokemon = await apiPoken.json();
 
     let divVerBusqueda = document.getElementById("div-ver-pokemon");
-    divVerBusqueda.className="container-sm div-ver-pokemon d-md-flex justify-content-md-between cargaPag";    
+    divVerBusqueda.className="container-sm div-ver-pokemon d-md-flex justify-content-md-evenly cargaPag";    
     divVerBusqueda.innerHTML="";
       let divPoken = document.createElement("div");
       divPoken.className="div-caracteristicas text-center";
@@ -14,9 +14,9 @@ let poken = async (namePoken)=>{
       imgPokenFront.src=pokemon.sprites.front_default;
       let imgPokenBack = document.createElement("img");
       imgPokenBack.src=pokemon.sprites.back_default;
-      let divMoviPoken = document.createElement("div");
+      let divMoviPoken = document.createElement("ul");
 // Busqueda de movimientos
-      divMoviPoken.className="div-movimientos gap-2";
+      divMoviPoken.className="div-movimientos containers-scroll gap-2";
       let arrayMovi = pokemon.moves;
       movimientos(arrayMovi,divMoviPoken);
 // Busqueda de estadisticas
@@ -38,6 +38,14 @@ let poken = async (namePoken)=>{
       let habilidad = pokemon.abilities;
       divHabilidad.insertAdjacentElement("beforeend",textHabilidades);
       habilidades(habilidad,divHabilidad);
+// Eventos de Btn Area y caracteristicas
+      ubicacionPoken(namePoken);
+      let btnArea = document.getElementById("btnArea");
+      btnArea.addEventListener("click",()=>{
+        btnAreaPoken(divMoviPoken,divEstadis)});
+      let btnCaracteristicas = document.getElementById("btnCaracteristicas")
+      btnCaracteristicas.addEventListener("click",()=>{
+        btnCaractPoken(divMoviPoken,divEstadis)})
 
       divVerBusqueda.insertAdjacentElement("beforeend",divPoken);
       divPoken.insertAdjacentElement("beforeend",namePokemon);
@@ -54,13 +62,58 @@ let poken = async (namePoken)=>{
   catch(error){
     let divVerBusqueda = document.getElementById("div-ver-pokemon");
     divVerBusqueda.innerHTML="";
-    divVerBusqueda.className="container-sm div-ver-pokemon d-md-flex justify-content-md-between error";
+    divVerBusqueda.className="container-sm div-ver-pokemon d-md-flex justify-content-md-evenly error";
     alert("El pokemon que intestas buscar no se encuentra");
   }
   finally{
     let spinner = document.getElementById("spinner");
         spinner.className="spinerOculto"
   }
+}
+
+let ubicacionPoken = async (namePoken)=>{
+  try{
+  let apiPoken = await fetch(`https://pokeapi.co/api/v2/pokemon/${namePoken}/encounters`)
+  let ubiPoken = await apiPoken.json();
+    
+  let divVerBusqueda = document.getElementById("div-ver-pokemon"); 
+    let textUbicacion = document.createElement("h4");
+    textUbicacion.textContent="Areas Pokemon";
+    let listaAreaPoken = document.createElement("ul");
+    listaAreaPoken.className="d-none";
+    listaAreaPoken.id="lista-area-poken";
+    listaAreaPoken.insertAdjacentElement("beforeend",textUbicacion);
+
+    ubiPoken.forEach(element => {
+      let ubicacion = document.createElement("li");
+      ubicacion.textContent=element.location_area.name;
+
+      divVerBusqueda.insertAdjacentElement("beforeend",listaAreaPoken);
+      listaAreaPoken.insertAdjacentElement("beforeend",ubicacion);
+    });
+  }
+  catch(error){
+    console.log(error);
+  }
+  finally{
+    let spinner = document.getElementById("spinner");
+        spinner.className="spinerOculto"
+  }
+}
+
+function btnAreaPoken(divMoviPoken,divEstadis){
+  let areaPoken = document.getElementById("lista-area-poken");
+  areaPoken.className="lista-area-poken containers-scroll";
+  console.log(areaPoken);
+  divMoviPoken.className="d-none";
+  divEstadis.className="d-none";
+}
+
+function btnCaractPoken(divMoviPoken,divEstadis){
+  let areaPoken = document.getElementById("lista-area-poken");
+  areaPoken.className="lista-area-poken d-none";
+  divMoviPoken.className="div-movimientos containers-scroll gap-2";
+  divEstadis.className="div-estadisticas align-items-center gap-3";
 }
 
 function spinner(divVerBusqueda) {
@@ -143,7 +196,7 @@ function validacion(namePokemon){
     let urlNew = `${url}?NAME=${namePokemon}/enconters`;
     history.pushState(null,"",urlNew)
 
-    formulario.reset();
+    // formulario.reset();
   }
   else{
     alert("Solo se aceptan letras")
