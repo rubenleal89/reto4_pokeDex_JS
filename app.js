@@ -17,15 +17,13 @@ let poken = async (namePoken)=>{
       let divMoviPoken = document.createElement("ul");
 // Busqueda de movimientos
       divMoviPoken.className="div-movimientos containers-scroll gap-2";
-      let arrayMovi = pokemon.moves;
-      movimientos(arrayMovi,divMoviPoken);
+      movimientos(pokemon,divMoviPoken);
 // Busqueda de estadisticas
       let divEstadis = document.createElement("ul");
       divEstadis.className="div-estadisticas align-items-center gap-3";
-      let estadiPoken = pokemon.stats;
-      estadisticas(estadiPoken,divEstadis);
+      estadisticas(pokemon,divEstadis);
       let tipoPoken = document.createElement("p")
-      tipoPoken.textContent=`Tipo de pokemon: ${pokemon.types[0].type.name}`;
+      tipePokemon(pokemon,tipoPoken);
       let anchuraPoken = document.createElement("p");
       anchuraPoken.textContent=`Altura ${pokemon.height}`;
       let alturaPoken = document.createElement("p");
@@ -35,9 +33,8 @@ let poken = async (namePoken)=>{
       divHabilidad.className="div-hablidades"
       let textHabilidades = document.createElement("h4");
       textHabilidades.textContent="Habilidades";
-      let habilidad = pokemon.abilities;
       divHabilidad.insertAdjacentElement("beforeend",textHabilidades);
-      habilidades(habilidad,divHabilidad);
+      habilidades(pokemon,divHabilidad);
 // Eventos de Btn Area y caracteristicas
       ubicacionPoken(namePoken);
       let btnArea = document.getElementById("btnArea");
@@ -64,6 +61,7 @@ let poken = async (namePoken)=>{
     divVerBusqueda.innerHTML="";
     divVerBusqueda.className="container-sm div-ver-pokemon d-md-flex justify-content-md-evenly error";
     alert("El pokemon que intestas buscar no se encuentra");
+    console.log(error);
   }
   finally{
     let spinner = document.getElementById("spinner");
@@ -75,7 +73,7 @@ let ubicacionPoken = async (namePoken)=>{
   try{
   let apiPoken = await fetch(`https://pokeapi.co/api/v2/pokemon/${namePoken}/encounters`)
   let ubiPoken = await apiPoken.json();
-    
+
   let divVerBusqueda = document.getElementById("div-ver-pokemon"); 
     let textUbicacion = document.createElement("h4");
     textUbicacion.textContent="Areas Pokemon";
@@ -94,6 +92,7 @@ let ubicacionPoken = async (namePoken)=>{
   }
   catch(error){
     console.log(error);
+    alert("ERROR al buscar las areas de los pokemons")
   }
   finally{
     let spinner = document.getElementById("spinner");
@@ -104,7 +103,6 @@ let ubicacionPoken = async (namePoken)=>{
 function btnAreaPoken(divMoviPoken,divEstadis){
   let areaPoken = document.getElementById("lista-area-poken");
   areaPoken.className="lista-area-poken containers-scroll";
-  console.log(areaPoken);
   divMoviPoken.className="d-none";
   divEstadis.className="d-none";
 }
@@ -126,28 +124,77 @@ function spinner(divVerBusqueda) {
     divVerBusqueda.insertAdjacentElement("beforeend",divSpinner);
 }
 
-function movimientos(arrayMovi,divMoviPoken){
+function tipePokemon(pokemon,tipoPoken) {
+    let moveUrl = pokemon.types[0].type.url;
+    let prom = fetch(moveUrl)
+    .then((response)=>response.json())
+    .then((data)=>{
+      let arrayLenguage = data.names
+      arrayLenguage.forEach(element => {
+        if (element.language.name === "es") {
+          tipoPoken.textContent=`Tipo de pokemon: ${element.name}`;
+        }
+      });
+    })
+    .catch(()=>{
+      alert("ERROR, fallo en la busqueda de tipo del pokemon")
+    });
+}
+
+function movimientos (pokemon,divMoviPoken){
   let textMovimientos = document.createElement("h4");
   textMovimientos.textContent="Movimientos";
   textMovimientos.className="text-movimientos text-center";
   divMoviPoken.insertAdjacentElement("beforeend",textMovimientos);
-  arrayMovi.forEach(element => {
-    let movimientos = document.createElement("li");
-    movimientos.textContent=element.move.name;
-    divMoviPoken.insertAdjacentElement("beforeend",movimientos);
+
+  let arrayMoves = pokemon.moves;
+  arrayMoves.forEach(element => {
+    let moveUrl = element.move.url;
+    let prom = fetch(moveUrl)
+    .then((response)=>response.json())
+    .then((data)=>{
+      let arrayLenguage = data.names
+      arrayLenguage.forEach(element => {
+        if (element.language.name === "es") {
+          let movimientos = document.createElement("li");
+          movimientos.textContent=element.name;
+          divMoviPoken.insertAdjacentElement("beforeend",movimientos);
+        }
+      });
+    })
+    .catch(()=>{
+      alert("ERROR, fallo en la busqueda de movimientos del pokemon")
+    });
   });
 }
 
-function estadisticas(estadiPoken,divEstadis){
+function estadisticas(pokemon,divEstadis){
   let textEstadisticas = document.createElement("h4");
   textEstadisticas.textContent="Estadisticas";
   textEstadisticas.className="text-estadisticas text-center";
   divEstadis.insertAdjacentElement("beforeend",textEstadisticas);
+
+  let estadiPoken = pokemon.stats;
   estadiPoken.forEach(element => {
-    let statName = document.createElement("li");
-    iconEstadisticas(element,statName);
-    statName.textContent=`${element.stat.name} : ${element.base_stat}`;
-    divEstadis.insertAdjacentElement("beforeend",statName);
+    let baseStat = element.base_stat
+    let statName  = document.createElement("li");
+    iconEstadisticas(element,statName)
+
+    let statsUrl = element.stat.url;
+    let prom = fetch(statsUrl)
+    .then((response)=>response.json())
+    .then((data)=>{
+      let arrayLenguage = data.names
+      arrayLenguage.forEach(element => {
+        if (element.language.name === "es") {
+          statName.textContent=`${element.name}: ${baseStat}`;
+          divEstadis.insertAdjacentElement("beforeend",statName);
+        }
+      });
+    })
+    .catch(()=>{
+      alert("ERROR, fallo en la busqueda de estadisticas del pokemon")
+    });
   });
 }
 
@@ -172,11 +219,26 @@ function iconEstadisticas(element,statName){
     }
 }
 
-function habilidades(habilidad,divHabilidad){
+function habilidades(pokemon,divHabilidad){
+  let habilidad = pokemon.abilities;
+
   habilidad.forEach(element => {
-    let habilidades = document.createElement("p");
-    habilidades.textContent=element.ability.name;
-    divHabilidad.insertAdjacentElement("beforeend",habilidades);
+    let abilityUrl = element.ability.url;
+    let prom = fetch(abilityUrl)
+    .then((response)=>response.json())
+    .then((data)=>{
+      let arrayLenguage = data.names
+      arrayLenguage.forEach(element => {
+        if (element.language.name === "es") {
+          let habilidades = document.createElement("p");
+          habilidades.textContent=element.name;
+          divHabilidad.insertAdjacentElement("beforeend",habilidades);
+        }
+    });
+    })
+    .catch(()=>{
+      alert("ERROR, fallo en la busqueda de habilidades del pokemon")
+    });
   });
 }
 
