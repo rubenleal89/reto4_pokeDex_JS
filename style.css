@@ -110,7 +110,6 @@
 
 .circle-ovalado .btn{
     --bs-btn-padding-y: .25rem;
-    /* --bs-btn-padding-x: 1rem; */
     --bs-btn-font-size: .75rem;
     --bs-btn-border-radius: 30px;
     --bs-btn-color: black;

@@ -196,7 +196,7 @@ function validacion(namePokemon){
     let urlNew = `${url}?NAME=${namePokemon}/enconters`;
     history.pushState(null,"",urlNew)
 
-    // formulario.reset();
+    formulario.reset();
   }
   else{
     alert("Solo se aceptan letras")
