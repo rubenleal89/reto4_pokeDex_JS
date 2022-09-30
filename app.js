@@ -1,3 +1,4 @@
+let languageApi="es";
 let poken = async (namePoken)=>{
   try{
     let apiPoken = await fetch(`https://pokeapi.co/api/v2/pokemon/${namePoken}`)
@@ -131,7 +132,7 @@ function tipePokemon(pokemon,tipoPoken) {
     .then((data)=>{
       let arrayLenguage = data.names
       arrayLenguage.forEach(element => {
-        if (element.language.name === "es") {
+        if (element.language.name === `${languageApi}`) {
           tipoPoken.textContent=`Tipo de pokemon: ${element.name}`;
         }
       });
@@ -155,7 +156,7 @@ function movimientos (pokemon,divMoviPoken){
     .then((data)=>{
       let arrayLenguage = data.names
       arrayLenguage.forEach(element => {
-        if (element.language.name === "es") {
+        if (element.language.name === `${languageApi}`) {
           let movimientos = document.createElement("li");
           movimientos.textContent=element.name;
           divMoviPoken.insertAdjacentElement("beforeend",movimientos);
@@ -186,7 +187,7 @@ function estadisticas(pokemon,divEstadis){
     .then((data)=>{
       let arrayLenguage = data.names
       arrayLenguage.forEach(element => {
-        if (element.language.name === "es") {
+        if (element.language.name === `${languageApi}`) {
           statName.textContent=`${element.name}: ${baseStat}`;
           divEstadis.insertAdjacentElement("beforeend",statName);
         }
@@ -229,7 +230,7 @@ function habilidades(pokemon,divHabilidad){
     .then((data)=>{
       let arrayLenguage = data.names
       arrayLenguage.forEach(element => {
-        if (element.language.name === "es") {
+        if (element.language.name === `${languageApi}`) {
           let habilidades = document.createElement("p");
           habilidades.textContent=element.name;
           divHabilidad.insertAdjacentElement("beforeend",habilidades);
@@ -242,10 +243,18 @@ function habilidades(pokemon,divHabilidad){
   });
 }
 
+function languages() {
+  let select = document.getElementById("select").value;
+  languageApi = select;
+}
+
 function recargaUrl(){
   let url = window.location.pathname;
   let urlNew = `${url}?#`;
   history.pushState(null,"",urlNew)
+  
+  let select = document.getElementById("select");
+  select.addEventListener("click",languages)
 }
 
 function validacion(namePokemon){

@@ -103,11 +103,6 @@
     color: green;
 }
 
-.circle-minus{
-    color: #519AFB;
-    font-size: 3rem;
-}
-
 .circle-ovalado .btn{
     --bs-btn-padding-y: .25rem;
     --bs-btn-font-size: .75rem;
@@ -194,4 +189,14 @@ h4{
 .lista-area-poken{
     max-height: 400px;
     overflow-y: scroll;
+}
+
+/* Select */
+
+.circle-ovalado .form-select{
+    width:65px;
+    height:65px;
+    background-color: #519AFB;
+    border: 0;
+    border-radius: 100px;
 }
