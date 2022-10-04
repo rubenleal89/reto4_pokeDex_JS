@@ -125,21 +125,20 @@ function spinner(divVerBusqueda) {
     divVerBusqueda.insertAdjacentElement("beforeend",divSpinner);
 }
 
-function tipePokemon(pokemon,tipoPoken) {
-    let moveUrl = pokemon.types[0].type.url;
-    let prom = fetch(moveUrl)
-    .then((response)=>response.json())
-    .then((data)=>{
-      let arrayLenguage = data.names
+let tipePokemon = async (pokemon,tipoPoken)=>{
+  try{
+    let prom = await fetch(pokemon.types[0].type.url);
+    let promData = await prom.json();
+    let arrayLenguage = promData.names
       arrayLenguage.forEach(element => {
         if (element.language.name === `${languageApi}`) {
           tipoPoken.textContent=`Tipo de pokemon: ${element.name}`;
         }
       });
-    })
-    .catch(()=>{
-      alert("ERROR, fallo en la busqueda de tipo del pokemon")
-    });
+  }
+  catch{
+    alert("ERROR, fallo en la busqueda de tipo del pokemon")
+  }
 }
 
 function movimientos (pokemon,divMoviPoken){
@@ -147,25 +146,25 @@ function movimientos (pokemon,divMoviPoken){
   textMovimientos.textContent="Movimientos";
   textMovimientos.className="text-movimientos text-center";
   divMoviPoken.insertAdjacentElement("beforeend",textMovimientos);
-
   let arrayMoves = pokemon.moves;
-  arrayMoves.forEach(element => {
-    let moveUrl = element.move.url;
-    let prom = fetch(moveUrl)
-    .then((response)=>response.json())
-    .then((data)=>{
-      let arrayLenguage = data.names
-      arrayLenguage.forEach(element => {
-        if (element.language.name === `${languageApi}`) {
-          let movimientos = document.createElement("li");
-          movimientos.textContent=element.name;
-          divMoviPoken.insertAdjacentElement("beforeend",movimientos);
-        }
-      });
-    })
-    .catch(()=>{
+
+  arrayMoves.forEach(async element => {
+    try{
+      let prom = await fetch(element.move.url)
+      let dataProm = await prom .json();
+  
+      let arrayLenguage = dataProm.names
+        arrayLenguage.forEach(element => {
+          if (element.language.name === `${languageApi}`) {
+            let movimientos = document.createElement("li");
+            movimientos.textContent=element.name;
+            divMoviPoken.insertAdjacentElement("beforeend",movimientos);
+          }
+        });
+    }
+    catch{
       alert("ERROR, fallo en la busqueda de movimientos del pokemon")
-    });
+    }
   });
 }
 
@@ -180,22 +179,25 @@ function estadisticas(pokemon,divEstadis){
     let baseStat = element.base_stat
     let statName  = document.createElement("li");
     iconEstadisticas(element,statName)
-
     let statsUrl = element.stat.url;
-    let prom = fetch(statsUrl)
-    .then((response)=>response.json())
-    .then((data)=>{
-      let arrayLenguage = data.names
+
+    let dataEstadis = async(statsUrl)=>{
+      try{
+        let prom = await fetch(statsUrl)
+        let dataProm = await prom.json();
+        let arrayLenguage = dataProm.names
       arrayLenguage.forEach(element => {
         if (element.language.name === `${languageApi}`) {
           statName.textContent=`${element.name}: ${baseStat}`;
           divEstadis.insertAdjacentElement("beforeend",statName);
         }
       });
-    })
-    .catch(()=>{
-      alert("ERROR, fallo en la busqueda de estadisticas del pokemon")
-    });
+      }
+      catch{
+        alert("ERROR, fallo en la busqueda de estadisticas del pokemon")
+      }
+    }
+    dataEstadis(statsUrl);
   });
 }
 
@@ -223,24 +225,23 @@ function iconEstadisticas(element,statName){
 function habilidades(pokemon,divHabilidad){
   let habilidad = pokemon.abilities;
 
-  habilidad.forEach(element => {
-    let abilityUrl = element.ability.url;
-    let prom = fetch(abilityUrl)
-    .then((response)=>response.json())
-    .then((data)=>{
-      let arrayLenguage = data.names
+  habilidad.forEach(async (element) =>{
+    try{
+      let prom = await fetch(element.ability.url);
+      let dataProm = await prom.json();
+      let arrayLenguage = dataProm.names
       arrayLenguage.forEach(element => {
         if (element.language.name === `${languageApi}`) {
           let habilidades = document.createElement("p");
           habilidades.textContent=element.name;
           divHabilidad.insertAdjacentElement("beforeend",habilidades);
         }
-    });
-    })
-    .catch(()=>{
-      alert("ERROR, fallo en la busqueda de habilidades del pokemon")
-    });
-  });
+      });
+    }
+    catch(error){
+      alert(error);
+    }
+  })
 }
 
 function languages() {
